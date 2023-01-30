@@ -2,3 +2,5 @@ bs4
 TikTokApi
 requests
 json
+flask
+sqlalchemy
