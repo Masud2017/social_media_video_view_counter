@@ -1,20 +1,34 @@
 import logging
 
+from . import handler
+from UrlProcessor import UrlProcessor
+
 class UrlHandlerFactory:
     def __init__(self):
         pass
     @classmethod
     def get_instance(self,url):
-        res =url.__contains__("facebook")
-        print(res)
+        url_processor = UrlProcessor(url)
+        processed_data = url_processor.get_processed_data()
+        
         if (url.__contains__("facebook")):
-            print("facebook")
+            facebook_handler = handler.FacebookUrlHandler(processed_data)
+
+            return facebook_handler
+            
         elif (url.__contains__("instagram")):
-            print("instagram")
+            instagram_handler = handler.InstagramUrlHandler(processed_data)
+            
+            return instagram_handler
+
         elif (url.__contains__("tiktok")):
-            print("tiktok")
+            tiktok_handler = handler.TikTokUrlHandler(processed_data)
+
+            return tiktok_handler
         elif (url.__contains__("youtube")):
-            print("youtube")
+            youtube_handler = handler.YoutubeUrlHandler(processed_data)
+
+            return youtube_handler
         else:
             raise TypeError("Sorry the type of the platform is not supported")
 # Test code
