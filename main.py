@@ -2,11 +2,23 @@ from flask import Flask
 from flask import request
 from flask import render_template
 from flask import abort, redirect, url_for
-
-
+from src.AuthHandler import AuthHandler
+from src.models.Models import db
+from flask_migrate import Migrate
 
 
 app = Flask(__name__)
+
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///video_viewer.db"
+db.init_app(app)
+migrate = Migrate(app, db)
+
+with app.app_context():
+    db.create_all()
+
+secret = "ds;fjasdklfjwefids;kfjsdklj234js;dklfjsd;sdfkjs;dfk"
+
+auth_handler  = AuthHandler(secret)
 
 @app.route("/",methods = ["GET"])
 def index():
@@ -22,6 +34,7 @@ def signup():
 
 @app.route("/auth",methods = ["POST"])
 def auth():
+    print(request.form["username"])
     return redirect(url_for("index"))
 
 @app.route("/reg",methods = ["POST"])

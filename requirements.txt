@@ -3,4 +3,5 @@ TikTokApi
 requests
 json
 flask
-sqlalchemy
+Flask-SQLAlchemy
+Flask-Migrate
