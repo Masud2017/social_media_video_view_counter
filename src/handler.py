@@ -62,13 +62,33 @@ class TikTokUrlHandler:
 
 class InstagramUrlHandler:
     def __init__(self,url_info):
-        pass
-    def set_access_token(self):
-        pass
+        # ["platform_name","full video_url"]
+        self.url_info = url_info
+
+    def set_access_token(self,access_token):
+        self.access_token = access_token
+
+        return self
+
     def scrape_data(self):
-        pass
+        querystring = {"query":self.url_info[1],"related_posts":"false"}
+        headers = {
+            "X-RapidAPI-Key": self.access_token,
+            "X-RapidAPI-Host": "instagram110.p.rapidapi.com"
+        }
+
+        url = "https://instagram110.p.rapidapi.com/v2/instagram/post"
+
+        self.response = requests.request("GET", url, headers=headers, params=querystring)
+
+
+
+        return self
+    
     def get_video_view_count(self):
-        pass
+        json_data = json.loads(self.response.text)
+        
+        return int(json_data["video_views_count"])
 #test code
 if __name__ == "__main__":
     # youtube_handler = YoutubeUrlHandler(["youtube","YTv7FVaLp68&t=303s"])
@@ -78,3 +98,8 @@ if __name__ == "__main__":
 
     # tiktok_handler = TikTokUrlHandler(["tiktok","7194308423406619946"])
     # print(tiktok_handler.scrape_data().get_video_view_count())
+
+    # access_token = ""
+    # instagram_handler = InstagramUrlHandler(["instagram","https://www.instagram.com/p/Cn9_atvDau_/"])
+    # print(instagram_handler.set_access_token("e36f1e6155mshff1726076963dcbp1c7f3djsne9d31088f5e0").scrape_data().get_video_view_count())
+    pass
