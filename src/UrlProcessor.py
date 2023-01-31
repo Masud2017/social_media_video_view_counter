@@ -27,7 +27,8 @@ class UrlProcessor:
             video_id = v_data.split("=")[1]
 
             data.append("youtube")
-            data.append(video_id)
+            # data.append(video_id)
+            data.append(self.url)
 
         return data
 # test code

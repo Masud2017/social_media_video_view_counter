@@ -9,11 +9,13 @@ import asyncio
 
 class YoutubeUrlHandler:
     def __init__(self,url_info_list):
-        self.youtube_url = "https://www.youtube.com/watch?v="
+        # self.youtube_url = "https://www.youtube.com/watch?v="
         self.url_info_list = url_info_list
         
     def scrap_data(self):
-        req = requests.get(self.youtube_url+self.url_info_list[1])
+        # req = requests.get(self.youtube_url+self.url_info_list[1])
+        req = requests.get(self.youtube_url)
+
         self.youtube_html_doc = req.text
         
         soup = BeautifulSoup(self.youtube_html_doc,"html.parser")
