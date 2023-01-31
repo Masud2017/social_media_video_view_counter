@@ -2,19 +2,19 @@ from flask import Flask,jsonify,flash
 from flask import request
 from flask import render_template
 from flask import abort, redirect, url_for
-from src.models.Models import db
+from .models.Models import db
 from flask_migrate import Migrate
 from flask_login import login_manager,login_required
-from src.models.Models import User
+from .models.Models import User
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import LoginManager
 from flask_login import login_user,logout_user
 from flask_login import current_user
 
 
-from src.UrlProcessor import UrlProcessor
-from src.UrlHandlerFactory import UrlHandlerFactory
-from src.models.Models import Url
+from .UrlProcessor  import UrlProcessor
+from .UrlHandlerFactory import UrlHandlerFactory
+from .models.Models import Url
 import re
 
 
@@ -148,7 +148,13 @@ def addUrl():
 def fetch_url_data():
     url = Url.query.filter_by(user_id=current_user.id).all()
     print("printing data")
+    
+
     url_json = []
+    
+    if not url:
+        return jsonify(url_json)
+
     for url_item in url:
         di = {"id":url_item.id,"url": url_item.url,"platform" : url_item.platform,"view_count": url_item.view_count}
         url_json.append(di)
@@ -193,3 +199,5 @@ def change_pass():
     db.session.commit()
 
     return redirect(url_for("index"))
+
+
