@@ -98,7 +98,9 @@ class InstagramUrlHandler:
     def get_video_view_count(self):
         json_data = json.loads(self.response.text)
         
-        return int(json_data["video_views_count"])
+        # return int(json_data["video_views_count"])
+        return int(json_data["video_plays_count"])
+
 #test code
 if __name__ == "__main__":
     # youtube_handler = YoutubeUrlHandler(["youtube","YTv7FVaLp68&t=303s"])
