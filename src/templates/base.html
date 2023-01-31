@@ -72,7 +72,9 @@
         $("#url_count").append(res.length);
         for (let i = 0; i < res.length; i++) {
 
-          $(".ttt").append("<div class = 'table-item'><div class = 'table-data'>"+res[i].url+"</div><div class = 'table-data'>"+res[i].platform+"</div><div class = 'table-data'>"+res[i].view_count+"</div></div>")
+          // $(".ttt").append("<div class = 'table-item'><div class = 'table-data'>"+res[i].url+"</div><div class = 'table-data'>"+res[i].platform+"</div><div class = 'table-data'>"+res[i].view_count+"</div></div>")
+          $(".ttt").append("<div class = 'table-item'><div class = 'table-data' style = 'display:inherit'> <form action = '{{ url_for('delete_url') }}' method = 'post'><input type = 'text' hidden name = 'id' value = "+res[i].id+"/><input style = 'display:inline-block;background-color:red;color:white' type = 'submit' value = 'del'/></form>"+res[i].url+"</div><div class = 'table-data'>"+res[i].platform+"</div><div class = 'table-data'>"+res[i].view_count+"</div></div>")
+
           total_view_count += res[i].view_count;
 
         }
