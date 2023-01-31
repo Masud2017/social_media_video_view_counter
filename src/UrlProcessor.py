@@ -21,10 +21,10 @@ class UrlProcessor:
             data.append(self.url)
 
         elif (self.url.__contains__("youtube")):
-            arr = self.url.split("/")
-            # v=343433
-            v_data = arr[len(arr)-1].split("?")[1]
-            video_id = v_data.split("=")[1]
+            # arr = self.url.split("/")
+            # # v=343433
+            # v_data = arr[len(arr)-1].split("?")[1]
+            # video_id = v_data.split("=")[1]
 
             data.append("youtube")
             # data.append(video_id)
