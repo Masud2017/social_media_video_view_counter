@@ -1,7 +1,6 @@
 bs4
 TikTokApi
 requests
-json
 flask
 Flask-SQLAlchemy
 Flask-Migrate
