@@ -18,7 +18,7 @@ class UrlHandlerFactory:
             
         elif (url.__contains__("instagram")):
             instagram_handler = handler.InstagramUrlHandler(processed_data)
-            instagram_handler.set_access_token("c1251dbaa5msh9f5286fd861dd3cp176191jsnf34bac56d0e4")
+            instagram_handler.set_access_token("77a1fc5d49msh39102cbb89d4a18p1b3a84jsn20e72fea1b5e")
             
             return instagram_handler
 

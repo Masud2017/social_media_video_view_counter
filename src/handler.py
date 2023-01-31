@@ -100,8 +100,8 @@ class InstagramUrlHandler:
 if __name__ == "__main__":
     # youtube_handler = YoutubeUrlHandler(["youtube","YTv7FVaLp68&t=303s"])
     # print(youtube_handler.scrape_data().get_video_view_count())
-    facebook_handler = FacebookUrlHandler("https://www.facebook.com/watch/?v=714212663453200")
-    print(facebook_handler.scrap_data().get_video_view_count())
+    # facebook_handler = FacebookUrlHandler("https://www.facebook.com/watch/?v=714212663453200")
+    # print(facebook_handler.scrap_data().get_video_view_count())
 
     # tiktok_handler = TikTokUrlHandler(["tiktok","7194308423406619946"])
     # print(tiktok_handler.scrap_data().get_video_view_count())
