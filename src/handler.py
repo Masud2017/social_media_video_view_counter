@@ -14,7 +14,7 @@ class YoutubeUrlHandler:
         
     def scrap_data(self):
         # req = requests.get(self.youtube_url+self.url_info_list[1])
-        req = requests.get(self.youtube_url)
+        req = requests.get(self.url_info_list[1])
 
         self.youtube_html_doc = req.text
         
