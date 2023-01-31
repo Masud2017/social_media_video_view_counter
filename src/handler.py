@@ -4,13 +4,15 @@ import json
 from TikTokApi import TikTokApi
 from TikTokApi.api.video import Video
 
+import asyncio
+
 
 class YoutubeUrlHandler:
     def __init__(self,url_info_list):
         self.youtube_url = "https://www.youtube.com/watch?v="
         self.url_info_list = url_info_list
         
-    def scrape_data(self):
+    def scrap_data(self):
         req = requests.get(self.youtube_url+self.url_info_list[1])
         self.youtube_html_doc = req.text
         
@@ -28,7 +30,8 @@ class YoutubeUrlHandler:
 
 class FacebookUrlHandler:
     def __init__(self,url):
-        self.req = requests.get("https://www.facebook.com/watch/?v=5828619303890975")
+        self.req = requests.get(url)
+        self.converion_digit_and_symbol_mapper = {"K":1000,"M":1000000,"B":1000000000,"T":1000000000000,"Q":1000000000000000}
 
     def scrap_data(self):
         self.soup = BeautifulSoup(self.req.text,"html.parser")
@@ -40,17 +43,21 @@ class FacebookUrlHandler:
         views_string = self.soup.find_all("meta")[1]["content"]
         views_string = views_string.split(" ")[0]
         print(views_string)
+        symbol = views_string[len(views_string) - 1]
         views_string = views_string.replace(views_string[len(views_string) - 1],"")
         views_count = float(views_string)
 
-        return views_count*1000
+        return views_count*self.converion_digit_and_symbol_mapper[symbol]
 
 class TikTokUrlHandler:
     def __init__(self,url_info):
         # ["platform","id"]
         self.url_info = url_info
     
-    def scrape_data(self):
+    def scrap_data(self):
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+
         api = TikTokApi()
         video = Video(id = self.url_info[1])
         self.play_count_str = video.info()["stats"]["playCount"]
@@ -70,7 +77,7 @@ class InstagramUrlHandler:
 
         return self
 
-    def scrape_data(self):
+    def scrap_data(self):
         querystring = {"query":self.url_info[1],"related_posts":"false"}
         headers = {
             "X-RapidAPI-Key": self.access_token,
@@ -93,11 +100,11 @@ class InstagramUrlHandler:
 if __name__ == "__main__":
     # youtube_handler = YoutubeUrlHandler(["youtube","YTv7FVaLp68&t=303s"])
     # print(youtube_handler.scrape_data().get_video_view_count())
-    # facebook_handler = FacebookUrlHandler("dsfsdf")
-    # print(facebook_handler.scrap_data().get_video_view_count())
+    facebook_handler = FacebookUrlHandler("https://www.facebook.com/watch/?v=714212663453200")
+    print(facebook_handler.scrap_data().get_video_view_count())
 
     # tiktok_handler = TikTokUrlHandler(["tiktok","7194308423406619946"])
-    # print(tiktok_handler.scrape_data().get_video_view_count())
+    # print(tiktok_handler.scrap_data().get_video_view_count())
 
     # access_token = ""
     # instagram_handler = InstagramUrlHandler(["instagram","https://www.instagram.com/p/Cn9_atvDau_/"])

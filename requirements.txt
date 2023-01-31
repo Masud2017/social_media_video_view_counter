@@ -5,3 +5,5 @@ json
 flask
 Flask-SQLAlchemy
 Flask-Migrate
+flask-login
+Flask-RESTful

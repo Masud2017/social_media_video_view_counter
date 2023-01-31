@@ -27,8 +27,108 @@
         }
     </style>
 
+
+<script>
+  $(document).ready(function() {
+    $(".table-data").click(()=> {
+      alert($(this).find('td:last').text());
+
+    })
+    
+    fetch("http://localhost:5000/fetch_url_data",{
+        method : "get",
+      }).then(res=>res.json()).then(res=> {
+        var total_view_count = 0;
+        
+        for (let i = 0; i < res.length; i++) {
+          $(".ttt").append("<div class = 'table-item'><div class = 'table-data' style = 'display:inherit'> <form action = '{{ url_for('delete_url') }}' method = 'post'><input type = 'text' hidden name = 'id' value = "+res[i].id+"/><input style = 'display:inline-block;background-color:red;color:white' type = 'submit' value = 'del'/></form>"+res[i].url+"</div><div class = 'table-data'>"+res[i].platform+"</div><div class = 'table-data'>"+res[i].view_count+"</div></div>")
+          total_view_count += res[i].view_count;
+        }
+      $("#url_count").append(res.length);
+      $("#view_count").append(total_view_count);
+
+      })
+
+    $("#addUrl").click(function(event){
+      var url = document.getElementById("url_input").value
+      event.preventDefault();
+      let formData = new FormData();
+      formData.append('url', url);
+      
+      fetch("http://localhost:5000/add_url",{
+        method : "post",
+        body : formData
+      }).then(async res =>  {
+        await fetch("http://localhost:5000/fetch_url_data",{
+        method : "get",
+      }).then(res=>res.json()).then(res=> {
+        var total_view_count = 0;
+
+        $(".ttt").empty()
+        $("#url_count").empty();
+        $("#view_count").empty();
+        
+        $("#url_count").append(res.length);
+        for (let i = 0; i < res.length; i++) {
+
+          $(".ttt").append("<div class = 'table-item'><div class = 'table-data'>"+res[i].url+"</div><div class = 'table-data'>"+res[i].platform+"</div><div class = 'table-data'>"+res[i].view_count+"</div></div>")
+          total_view_count += res[i].view_count;
+
+        }
+        $("#view_count").append(total_view_count);
+      })
+        
+      })
+      
+
+    })
+
+    $("#refresh").click(function(event){
+      event.preventDefault();
+      
+      fetch("http://localhost:5000/refresh_list",{
+        method : "get",
+      }).then(res=>res.json()).then(res=> {
+        var url = document.getElementById("url_input").value
+      event.preventDefault();
+      let formData = new FormData();
+      formData.append('url', url);
+
+     fetch("http://localhost:5000/fetch_url_data",{
+        method : "get",
+      }).then(res=>res.json()).then(res=> {
+        var total_view_count = 0;
+
+        $(".ttt").empty()
+        $("#url_count").empty();
+        $("#view_count").empty();
+        
+        $("#url_count").append(res.length);
+        for (let i = 0; i < res.length; i++) {
+
+          $(".ttt").append("<div class = 'table-item'><div class = 'table-data'>"+res[i].url+"</div><div class = 'table-data'>"+res[i].platform+"</div><div class = 'table-data'>"+res[i].view_count+"</div></div>")
+          total_view_count += res[i].view_count;
+
+        }
+        $("#view_count").append(total_view_count);
+      }).then(res=> alert("New url has been added to your list.")).catch(err=>alert("Something went wrong"));
+        
+        
+  
+
+      })
+
+    })
+
+
+    
+  })
+</script>
+
 </head>
 <body>
+  
+
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <!-- Navbar content -->
         <div class="container-fluid">
@@ -38,27 +138,36 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                {% if not current_user.is_authenticated %}
                 <li class="nav-item">
                   <a class="nav-link active" aria-current="page" href="/login">Login</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="/signup">Signup</a>
                 </li>
-                <!-- <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Dropdown
+                {% endif %}
+
+                {% if current_user.is_authenticated %}
+
+                <li class="nav-item dropstart">
+                  <a class="nav-link text-light dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    {{current_user.name}}
                   </a>
                   <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="/login">Login</a></li>
-                    <li><a class="dropdown-item" href="/signup">Signup</a></li>
+                    <li><a class="dropdown-item" href="/setting">Setting</a></li>
+                    <li><a class="dropdown-item" href="/logout">Logout</a></li>
                   </ul>
-                </li> -->
+                </li>
+                {% endif %}
               </ul>
             
             </div>
           </div>
     </nav>
 
+     
+
+    
     {% block body %} {% endblock %}
 
     <div name = "footer">

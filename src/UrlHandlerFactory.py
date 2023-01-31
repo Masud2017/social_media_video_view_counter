@@ -1,23 +1,24 @@
 import logging
 
 from . import handler
-from UrlProcessor import UrlProcessor
+from . import UrlProcessor
 
 class UrlHandlerFactory:
     def __init__(self):
         pass
     @classmethod
     def get_instance(self,url):
-        url_processor = UrlProcessor(url)
+        url_processor = UrlProcessor.UrlProcessor(url)
         processed_data = url_processor.get_processed_data()
         
         if (url.__contains__("facebook")):
-            facebook_handler = handler.FacebookUrlHandler(processed_data)
+            facebook_handler = handler.FacebookUrlHandler(url)
 
             return facebook_handler
             
         elif (url.__contains__("instagram")):
             instagram_handler = handler.InstagramUrlHandler(processed_data)
+            instagram_handler.set_access_token("c1251dbaa5msh9f5286fd861dd3cp176191jsnf34bac56d0e4")
             
             return instagram_handler
 

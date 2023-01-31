@@ -32,5 +32,5 @@ class UrlProcessor:
         return data
 # test code
 if __name__ == "__main__":
-    url_processor = UrlProcessor("https://www.tiktok.com/@motionrockentertainment/video/7191084209082010881")
-    url_processor.get_processed_data()
+    url_processor = UrlProcessor("https://www.tiktok.com/@sevki8mine/video/7194058613235649797")
+    print(url_processor.get_processed_data())
