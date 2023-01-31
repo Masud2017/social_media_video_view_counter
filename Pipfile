@@ -10,7 +10,6 @@ flask_sqlalchemy="*"
 flask_login="*"
 flask_migrate="*"
 bs4="*"
-flask_migrate="*"
 TikTokApi="*"
 
 
