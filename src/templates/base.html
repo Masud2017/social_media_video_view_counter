@@ -30,12 +30,13 @@
 
 <script>
   $(document).ready(function() {
+    var web_url = "https://viewer-app.herokuapp.com/"
     $(".table-data").click(()=> {
       alert($(this).find('td:last').text());
 
     })
     
-    fetch("http://localhost:5000/fetch_url_data",{
+    fetch("https://viewer-app.herokuapp.com/fetch_url_data",{
         method : "get",
       }).then(res=>res.json()).then(res=> {
         var total_view_count = 0;
@@ -55,11 +56,11 @@
       let formData = new FormData();
       formData.append('url', url);
       
-      fetch("http://localhost:5000/add_url",{
+      fetch("https://viewer-app.herokuapp.com/add_url",{
         method : "post",
         body : formData
       }).then(async res =>  {
-        await fetch("http://localhost:5000/fetch_url_data",{
+        await fetch("https://viewer-app.herokuapp.com/fetch_url_data",{
         method : "get",
       }).then(res=>res.json()).then(res=> {
         var total_view_count = 0;
@@ -86,7 +87,7 @@
     $("#refresh").click(function(event){
       event.preventDefault();
       
-      fetch("http://localhost:5000/refresh_list",{
+      fetch("https://viewer-app.herokuapp.com/refresh_list",{
         method : "get",
       }).then(res=>res.json()).then(res=> {
         var url = document.getElementById("url_input").value
@@ -94,7 +95,7 @@
       let formData = new FormData();
       formData.append('url', url);
 
-     fetch("http://localhost:5000/fetch_url_data",{
+     fetch("https://viewer-app.herokuapp.com/fetch_url_data",{
         method : "get",
       }).then(res=>res.json()).then(res=> {
         var total_view_count = 0;
