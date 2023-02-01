@@ -1,13 +1,14 @@
-FROM mcr.microsoft.com/playwright:alpine
+FROM mcr.microsoft.com/playwright
 
-ADD ./requiements.txt /tmp/requiements.txt
-RUN pip3 install --no-cache-dir -q -r requiements.txt
+# RUN apk add --no-cache --update python3 py3-pip bash
+# ADD ./requirements.txt /tmp/requirements.txt
+# RUN pip3 install --no-cache-dir -q -r requirements.txt
 
 ADD . /opt/social_media_views_counter
 
 WORKDIR /opt/social_media_views_counter
 
-RUN adduser -D jibon
-USER jibon
+# RUN adduser -D jibon
+# USER jibon
 
 CMD gunicorn --bind 0.0.0.0:$PORT wsgi
