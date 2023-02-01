@@ -1,8 +1,12 @@
-FROM mcr.microsoft.com/playwright
-WORKDIR /app
-COPY . /app
-RUN pip install --no-cache-dir -r requirements.txt
-ENV FLASK_APP=wsgi.py
-ENV FLASK_ENV=development
+FROM continuumio/anaconda3
 
-CMD ["flask", "run", "--host=0.0.0.0"]
+# RUN apt-get update && apt-get install -y curl unzip
+
+# RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
+# RUN apt-get install -y nodejs
+
+# RUN npm i -g playwright
+ADD . /app
+WORKDIR /app
+
+ENTRYPOINT ["python","wsgi.py"]
