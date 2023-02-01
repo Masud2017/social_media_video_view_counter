@@ -1,1 +1,19 @@
-build-essential
+#!/bin/bash
+
+echo "Installing Playwright dependencies..."
+
+# install dependencies
+apt-get update && apt-get install -y libgtk-3-0 libasound2 libgconf-2-4
+
+# download and extract playwright
+curl -sL https://github.com/microsoft/playwright/releases/download/v1.18.1/playwright-v1.18.1-linux.tar.gz | tar xz
+
+# install playwright
+./playwright-v1.18.1-linux/google-chrome/install.sh
+./playwright-v1.18.1-linux/chromium/install.sh
+./playwright-v1.18.1-linux/firefox/install.sh
+
+# clean up
+rm -rf playwright-v1.18.1-linux
+
+echo "Playwright dependencies installed successfully!"
