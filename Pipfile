@@ -11,7 +11,7 @@ flask_login="*"
 flask_migrate="*"
 bs4="*"
 TikTokApi="*"
-
+playwright="*"
 
 
 [dev-packages]
