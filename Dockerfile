@@ -1,4 +1,4 @@
-FROM python:3.8
+FROM python:3.10
 WORKDIR /viewer-app
 COPY . /viewer-app/
 RUN pip install --no-cache-dir Flask
