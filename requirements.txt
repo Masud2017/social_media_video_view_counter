@@ -29,3 +29,4 @@ TikTokApi==5.2.2
 typing_extensions==4.4.0
 urllib3==1.26.14
 Werkzeug==2.2.2
+mysqlclient
