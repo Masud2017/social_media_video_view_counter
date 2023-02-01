@@ -22,7 +22,7 @@ import re
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = 'secret-key-goes-here'
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///video_viewer.db"
+app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://b3390dd122f05c:d6cb4008@us-cdbr-east-06.cleardb.net/heroku_359420f20403004?reconnect=true"
 db.init_app(app)
 migrate = Migrate(app, db,render_as_batch=True)
 
