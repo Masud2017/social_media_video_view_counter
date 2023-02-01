@@ -1,2 +1,2 @@
 build-essential
-update
+libgstreamer-1.0-dev
