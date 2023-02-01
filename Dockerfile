@@ -8,6 +8,8 @@ RUN apt-get install -y nodejs
 RUN npm i -g playwright
 
 ADD . /app
+COPY requirements.txt /tmp/requirements.txt
+RUN pip install -r /tmp/requirements.txt
 WORKDIR /app
 
-ENTRYPOINT ["python","wsgi.py"]
+ENTRYPOINT ["flask","run"]
