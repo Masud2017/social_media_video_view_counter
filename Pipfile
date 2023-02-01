@@ -12,6 +12,7 @@ flask_migrate="*"
 bs4="*"
 TikTokApi="*"
 mysqlclient="*"
+playwright="*"
 
 
 [dev-packages]
