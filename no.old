@@ -1,0 +1,44 @@
+FROM ubuntu:latest
+
+# RUN add-apt-repository universe
+RUN apt-get update
+RUN apt-get install -y python3-pip
+RUN apt-get install default-libmysqlclient-dev -y
+
+ADD ./requirements.txt /tmp/requirements.txt
+
+RUN pip3 install --no-cache-dir -q -r /tmp/requirements.txt
+ADD . /opt/social-media-views-counter
+
+WORKDIR /opt/social-media-views-counter
+
+RUN playwright install
+RUN playwright install-deps
+
+ENV PORT 5000
+
+CMD gunicorn --bind 0.0.0.0:$PORT wsgi
+
+
+
+
+FROM ubuntu:latest
+
+# RUN add-apt-repository universe
+RUN apt-get update
+RUN apt-get install -y python3-pip
+RUN apt-get install default-libmysqlclient-dev -y
+
+# Install dependencies
+RUN pip3 install --no-cache-dir -q playwright
+RUN pip3 install --no-cache-dir -q playwright-chromium
+
+# Copy your files
+ADD ./requirements.txt /tmp/requirements.txt
+RUN pip3 install --no-cache-dir -q -r /tmp/requirements.txt
+ADD . /opt/social-media-views-counter
+
+WORKDIR /opt/social-media-views-counter
+
+ENTRYPOINT [ "python3" ]
+CMD ["wsgi.py"]
