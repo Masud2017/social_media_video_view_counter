@@ -7,7 +7,7 @@ libasound2
 libgconf-2-4
 
 # download and extract playwright
-curl -sL https://github.com/microsoft/playwright/releases/download/v1.18.1/playwright-v1.18.1-linux.tar.gz | tar xz
+https://github.com/microsoft/playwright/releases/download/v1.18.1/playwright-v1.18.1-linux.tar.gz | tar xz
 
 # install playwright
 ./playwright-v1.18.1-linux/google-chrome/install.sh
