@@ -22,6 +22,5 @@ ENV FLASK_APP=wsgi.py
 RUN playwright install
 RUN playwright install-deps
 
-EXPOSE 5000
 
-CMD ["flask","run","-h","0.0.0.0","-p","$PORT"]
+CMD ["flask","run","-h","0.0.0.0","-p",$PORT]
