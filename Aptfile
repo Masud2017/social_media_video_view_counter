@@ -7,4 +7,3 @@ libasound2
 libgconf-2-4
 
 # download and extract playwright
-playwright install
