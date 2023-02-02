@@ -18,6 +18,8 @@ libwoff1
 libgles2
 libgles2-mesa
 gstreamer1.0-libav
+https://www.deb-multimedia.org/pool/main/g/gst-libav1.0-dmo/gstreamer1.0-libav_1.18.4-dmo1_arm64.deb
+
 
 # libgstgl-1.0.0 
 http://archive.ubuntu.com/ubuntu/pool/main/g/gst-plugins-base1.0/libgstreamer-gl1.0-0_1.14.0-2ubuntu1_amd64.deb
