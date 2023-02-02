@@ -36,7 +36,7 @@
 
     })
     
-    fetch("http://localhost:5003/fetch_url_data",{
+    fetch("https://www.youtube.com/watch?v=bfB4YN_4Vyo&list=PLym69wpbTIIEOesltWGUsVnY9HDWbJit_&index=2/fetch_url_data",{
         method : "get",
       }).then(res=>res.json()).then(res=> {
         var total_view_count = 0;
@@ -56,11 +56,11 @@
       let formData = new FormData();
       formData.append('url', url);
       
-      fetch("http://localhost:5003/add_url",{
+      fetch("https://video-views-counter-app.herokuapp.com/add_url",{
         method : "post",
         body : formData
       }).then(async res =>  {
-        await fetch("http://localhost:5003/fetch_url_data",{
+        await fetch("https://video-views-counter-app.herokuapp.com/fetch_url_data",{
         method : "get",
       }).then(res=>res.json()).then(res=> {
         var total_view_count = 0;
@@ -89,7 +89,7 @@
     $("#refresh").click(function(event){
       event.preventDefault();
       
-      fetch("http://localhost:5003/refresh_list",{
+      fetch("https://video-views-counter-app.herokuapp.com/refresh_list",{
         method : "get",
       }).then(res=>res.json()).then(res=> {
         var url = document.getElementById("url_input").value
@@ -97,7 +97,7 @@
       let formData = new FormData();
       formData.append('url', url);
 
-     fetch("http://localhost:5003/fetch_url_data",{
+     fetch("https://video-views-counter-app.herokuapp.com/fetch_url_data",{
         method : "get",
       }).then(res=>res.json()).then(res=> {
         var total_view_count = 0;
