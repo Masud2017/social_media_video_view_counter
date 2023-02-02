@@ -24,4 +24,4 @@ RUN playwright install-deps
 
 
 # CMD ["flask","run","-h","0.0.0.0","-p",$PORT]
-CMD ["python","wsgi.py"]
+CMD ["python3","wsgi.py"]
