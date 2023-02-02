@@ -5,7 +5,7 @@
 libgtk-3-0 
 libasound2 
 libgconf-2-4
-
+debian-archive-keyring
 # download and extract playwright
 :repo:deb http://security.debian.org/debian-security stretch/updates main 
 
