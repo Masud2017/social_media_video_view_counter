@@ -16,6 +16,10 @@ libopus0
 libharfbuzz-icu0 
 # libgstallocators-1.0.0
 
+libwoff1
+libgles2
+gstreamer1.0-libav
+
 # libgstgl-1.0.0 
 http://archive.ubuntu.com/ubuntu/pool/main/g/gst-plugins-base1.0/libgstreamer-gl1.0-0_1.14.0-2ubuntu1_amd64.deb
 libenchant-2-2
