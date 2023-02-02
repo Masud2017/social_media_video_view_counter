@@ -36,7 +36,7 @@
 
     })
     
-    fetch("https://www.youtube.com/watch?v=bfB4YN_4Vyo&list=PLym69wpbTIIEOesltWGUsVnY9HDWbJit_&index=2/fetch_url_data",{
+    fetch("https://video-views-counter-app.herokuapp.com/fetch_url_data",{
         method : "get",
       }).then(res=>res.json()).then(res=> {
         var total_view_count = 0;
