@@ -15,7 +15,7 @@ libharfbuzz-icu0
 # libgstallocators-1.0.0
 
 libwoff1
-libgles2
+libgles2-dev
 libgles2-mesa
 gstreamer1.0-libav
 https://www.deb-multimedia.org/pool/main/g/gst-libav1.0-dmo/gstreamer1.0-libav_1.18.4-dmo1_arm64.deb
