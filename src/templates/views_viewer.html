@@ -66,10 +66,6 @@
     }
 </style>
 
-<form id="emit" method="POST" action='#' class = "input_container">
-    <input type="text" name="emit_data" id="emit_data" placeholder="Message" class = "form-control">
-    <input type="submit" value="Send Message" clas = "btn btn-danger">
-</form>
 
 
 <form class = "input_container">
@@ -96,18 +92,5 @@
     <div class = "table-footer-data">Total view count : <span id = "view_count"></span></div>
 
 </div>
-
-
-
-<form id="broadcast" method="POST" action='#'>
-    <input type="text" name="broadcast_data" id="broadcast_data" placeholder="Message">
-    <input type="submit" value="Send Broadcast Message">
-</form>
-
-<form id="disconnect" method="POST" action="#">
-    <input type="submit" value="Disconnect Server">
-</form>
-<h2 style="background-color:white;">Logs</h2>
-<div id="log" ></div>
 
 {% endblock %}
