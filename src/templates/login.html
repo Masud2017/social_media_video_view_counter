@@ -3,6 +3,13 @@
 {% block body %}
 
 <div  class = "d-flex justify-content-center align-items-center" style = "height : 85vh">
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div class="notification is-danger">
+                {{ messages[0] }}
+            </div>
+        {% endif %}
+    {% endwith %}
     <form action="{{ url_for('auth') }}" method = "post" style = "height: 12rem; width: 30rem;" class = "mt-sm-4 shadow-lg p-sm-3">
         <input class = "form-control" type = "text" placeholder="Enter your user name" name = "username"/>
         <input class = "form-control mt-sm-2" type = "password" placeholder="Enter your password" name ="password"/>

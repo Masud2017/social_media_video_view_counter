@@ -93,6 +93,7 @@ def auth():
     # take the user-supplied password, hash it, and compare it to the hashed password in the database
     # print(user.name)
     if not user or not check_password_hash(user.password, password):
+        flash("Your password is wrong!")
         return redirect(url_for('login')) # if the user doesn't exist or password is wrong, reload the page
 
     login_user(user, remember=False)
