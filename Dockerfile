@@ -10,7 +10,7 @@ RUN apt-get update && \
 RUN  apt install python3-pip -y
 RUN  apt-get update && apt-get install -y default-libmysqlclient-dev
 RUN apt-get install -y build-essential
-RUN apt-get install python-mysqldb
+RUN pip3 install mysql-python
 
 WORKDIR /app
 ADD . /app
