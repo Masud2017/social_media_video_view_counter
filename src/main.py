@@ -22,7 +22,7 @@ import os
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = 'secret-key-goes-here'
-app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://be031c695de76c:1257a2f0@us-cdbr-east-06.cleardb.net/heroku_22b0ab8db95e202"
+app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://b474d7d9b4fb25:d1f14123@us-cdbr-east-06.cleardb.net/heroku_ec18291005507c4"
 db.init_app(app)
 migrate = Migrate(app, db,render_as_batch=True)
 
