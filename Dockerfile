@@ -1,6 +1,7 @@
 # FROM openstax/python3-chrome-base
-FROM ubuntu:latest
+# FROM ubuntu:latest
 
+FROM mcr.microsoft.com/playwright
 RUN apt-get update && \
     apt-get install -y software-properties-common && \
     add-apt-repository -y ppa:deadsnakes/ppa && \
@@ -19,8 +20,8 @@ RUN pip3 install -r requirements.txt
 
 ENV FLASK_APP=wsgi.py
 
-ADD xvfb_init /etc/init.d/xvfb
-RUN chmod a+x /etc/init.d/xvfb
+# ADD xvfb_init /etc/init.d/xvfb
+# RUN chmod a+x /etc/init.d/xvfb
 
 RUN playwright install
 RUN playwright install-deps
