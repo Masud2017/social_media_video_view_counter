@@ -30,7 +30,6 @@ app.config['SECRET_KEY'] = 'secret-key-goes-here'
 db_url = os.environ.get("CLEARDB_DATABASE_URL")
 app.config["SQLALCHEMY_DATABASE_URI"] = db_url.split("?")[0]
 
-
 db.init_app(app)
 migrate = Migrate(app, db,render_as_batch=True)
 
