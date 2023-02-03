@@ -19,6 +19,9 @@ RUN pip3 install -r requirements.txt
 
 ENV FLASK_APP=wsgi.py
 
+ADD xvfb_init /etc/init.d/xvfb
+RUN chmod a+x /etc/init.d/xvfb
+
 RUN playwright install
 RUN playwright install-deps
 
