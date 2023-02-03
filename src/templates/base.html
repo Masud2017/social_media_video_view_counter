@@ -20,6 +20,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;500;600;700;800;900;1000&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 
     <style>
         * {
@@ -125,7 +127,39 @@
 
 
     
+
+    '{% if current_user.is_admin %}'
+
+
+    const ctx = document.getElementById('chart');
+
+var chart = new Chart(ctx, {
+  type: 'pie',
+  data: {
+    labels: ['Youtube', 'Instagram', 'Tiktok'],
+    datasets: [{
+      label: '# of Votes',
+      data: ['{{ total_count_by_url_type["youtube"]}}', '{{ total_count_by_url_type["instagram"]}}', '{{ total_count_by_url_type["tiktok"]}}'],
+      borderWidth: 1
+    }]
+  },
+  options: {
+    scales: {
+      y: {
+        beginAtZero: true
+      }
+    }
+  }
+});
+chart.canvas.parentNode.style.height = '30rem';
+chart.canvas.parentNode.style.width = '30rem';
+'{% endif %}'
+
   })
+  
+
+
+
 </script>
 
 </head>

@@ -11,6 +11,7 @@ class User(UserMixin,db.Model):
     email = db.Column(db.String(100), unique=True, nullable=False)
     password = db.Column(db.String(200),nullable = False)
     urls = db.relationship("Url",backref="user",cascade="all,delete")
+    is_admin  = db.Column(db.Boolean,default = False)
 
 class Url(db.Model):
     id = db.Column(db.Integer, primary_key=True)

@@ -68,29 +68,65 @@
 
 
 
-<form class = "input_container">
-    <input class = "form-control mt-sm-4" type = "text" placeholder="Enter url to add to list" name = "url" style ="width : 35rem"  id = "url_input" required/>
-    <input type = "submit" class = "btn btn-danger mt-sm-2" value = "Add url" id = "addUrl"/>
-    <input type = "submit" class = "btn btn-success mt-sm-2" value = "Refresh" id = "refresh"/>
 
-</form>
+{% if current_user.is_admin %}
+    <div class = "row p-4 gap-auto m-1" style = "border : 1rem dashed green">
+        <div class = "col-sm-4 bg-danger" name = "catagory_name">
+            <u class = "text-light"><h1  style = "font-size:2.5rem" class = "text-light">View count by url type </h1></u>
+            {% for key in total_count_by_url_type %}
+                <span style = "color : white"><strong style = "font-size: 2rem;">{{ key }}</strong><span style = "font-size: 2rem;"> : {{total_count_by_url_type[key]}} </span></span><br>
+            {% endfor %}
+        </div>
 
-<div class= "table-item-header">
-    <div class = "table-data">Url</div>
-    <div class = "table-data">Platform</div>
-    <div class = "table-data">Views</div>
-    
-</div>
-<div class = "table-container ttt">
-    
+        <div class = "col-lg d-flex justify-content-center" name = "data_pie_chart">
+            <canvas id="chart"></canvas>
+        </div>
+        
 
-    
-    
-</div>
-<div class = "table-footer">
-    <div class = "table-footer-data">Url count : <span id = "url_count"></span></div>
-    <div class = "table-footer-data">Total view count : <span id = "view_count"></span></div>
+    </div>
 
-</div>
+    <div class = 'text-center'>
+        <h1 class = "mt-sm-4">Total views combined all users and url types : {{total_count}}</h1>
+    </div>
+        
+    <table class = "table table-hover mt-sm-4 m-2">
+        <tr class = "bg-primary text-light"><th>User Name</th><th>Total view Count</th></tr>
+        
+        {% for key in total_count_for_each_user %}
+         <tr> <td>{{ key }}</td><td>{{total_count_for_each_user[key]}}</td></tr>
+            
+        {% endfor %}
+
+    </table>
+
+        
+
+
+{% else %}
+    <form class = "input_container">
+        <input class = "form-control mt-sm-4" type = "text" placeholder="Enter url to add to list" name = "url" style ="width : 35rem"  id = "url_input" required/>
+        <input type = "submit" class = "btn btn-danger mt-sm-2" value = "Add url" id = "addUrl"/>
+        <input type = "submit" class = "btn btn-success mt-sm-2" value = "Refresh" id = "refresh"/>
+
+    </form>
+
+    <div class= "table-item-header">
+        <div class = "table-data">Url</div>
+        <div class = "table-data">Platform</div>
+        <div class = "table-data">Views</div>
+        
+    </div>
+    <div class = "table-container ttt">
+        
+
+        
+        
+    </div>
+    <div class = "table-footer">
+        <div class = "table-footer-data">Url count : <span id = "url_count"></span></div>
+        <div class = "table-footer-data">Total view count : <span id = "view_count"></span></div>
+
+    </div>
+{% endif %}
 
 {% endblock %}

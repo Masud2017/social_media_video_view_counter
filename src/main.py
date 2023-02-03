@@ -17,14 +17,16 @@ from .models.Models import Url
 import re
 import os
 
+from .VideoViewsStat import VideoViewsStat
+
 
 
 #?
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = 'secret-key-goes-here'
-# app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://b474d7d9b4fb25:d1f14123@us-cdbr-east-06.cleardb.net/heroku_ec18291005507c4"
-# CLEARDB_DATABASE_URL
+# app. config["SQLALCHEMY_DATABASE_URI"] =  "sqlite:///video_viewer.db"
+
 db_url = os.environ.get("CLEARDB_DATABASE_URL")
 app.config["SQLALCHEMY_DATABASE_URI"] = db_url.split("?")[0]
 
@@ -61,6 +63,11 @@ def signup():
 @app.route("/viewer",methods = ["GET"])
 @login_required
 def viewer():
+    video_views_stat = VideoViewsStat()
+
+    if (current_user.is_admin):
+        return render_template("views_viewer.html",total_count_by_url_type=video_views_stat.get_total_views_count_by_url_type(), total_count = video_views_stat.get_total_views_value(), total_count_for_each_user = video_views_stat.get_total_views_by_user())
+
     return render_template("views_viewer.html")
 
 @app.route("/setting",methods = ["GET"])
@@ -206,3 +213,14 @@ def change_pass():
     return redirect(url_for("index"))
 
 
+@app.before_first_request
+def admin_user_seeder():
+    admin_user = User.query.filter_by(is_admin = True).first()
+
+    if (not admin_user.is_admin):
+        print("Registering admin user...")
+        admin_user = User(name = "Admin user", email = "khannaalankar2023@gmail.com",password=generate_password_hash("alankarM@",method = "sha256"),is_admin=True)
+        db.session.add(admin_user)
+        db.session.commit()
+    else:
+        print("Admin credential is already available in the database")
