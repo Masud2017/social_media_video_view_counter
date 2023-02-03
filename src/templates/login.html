@@ -4,7 +4,7 @@
 
 <div  class = "d-flex justify-content-center align-items-center" style = "height : 85vh">
     
-    <form action="{{ url_for('auth') }}" method = "post" style = "height: 12rem; width: 30rem;" class = "mt-sm-4 shadow-lg p-sm-3">
+    <form action="{{ url_for('auth') }}" method = "post" style = "width: 30rem;" class = "mt-sm-4 shadow-lg p-sm-3">
         {% with messages = get_flashed_messages() %}
         {% if messages %}
             <div class="notification is-danger">
