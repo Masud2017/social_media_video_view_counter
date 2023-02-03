@@ -116,7 +116,6 @@ python-docx==0.8.11
 python-facebook-api==0.15.0
 pytz==2022.6
 pytz-deprecation-shim==0.1.0.post0
-pywin32==305
 pywinpty==2.0.9
 PyYAML==6.0
 pyzmq==24.0.1
