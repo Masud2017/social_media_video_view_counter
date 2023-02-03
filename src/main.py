@@ -25,7 +25,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret-key-goes-here'
 # app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://b474d7d9b4fb25:d1f14123@us-cdbr-east-06.cleardb.net/heroku_ec18291005507c4"
 # CLEARDB_DATABASE_URL
-app.config["SQLALCHEMY_DATABASE_URI"] = os.getnev("CLEARDB_DATABASE_URL")
+app.config["SQLALCHEMY_DATABASE_URI"] = os.getnev["CLEARDB_DATABASE_URL"]
 
 
 db.init_app(app)
