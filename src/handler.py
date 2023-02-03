@@ -61,12 +61,11 @@ class TikTokUrlHandler:
         loop = asyncio.new_event_loop()
         asyncio.set_event_loop(loop)
 
-        
-        with TikTokApi() as api:
-            api = TikTokApi()
-            video = Video(id = self.url_info[1])
-            
+        api = TikTokApi()
+        video = Video(id = self.url_info[1])
         self.play_count_str = video.info()["stats"]["playCount"]
+        loop.close()
+
 
         return self
     

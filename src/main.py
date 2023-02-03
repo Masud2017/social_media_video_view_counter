@@ -16,7 +16,6 @@ from .UrlHandlerFactory import UrlHandlerFactory
 from .models.Models import Url
 import re
 import os
-from flask_socketio import SocketIO,emit
 
 
 
@@ -25,9 +24,6 @@ app = Flask(__name__)
 
 app.config['SECRET_KEY'] = 'secret-key-goes-here'
 app.config["SQLALCHEMY_DATABASE_URI"] = "mysql://b474d7d9b4fb25:d1f14123@us-cdbr-east-06.cleardb.net/heroku_ec18291005507c4"
-# app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///video_viewer.db"
-
-
 
 db.init_app(app)
 migrate = Migrate(app, db,render_as_batch=True)
@@ -38,66 +34,6 @@ with app.app_context():
 login_manager = LoginManager()
 login_manager.login_view = 'login'
 login_manager.init_app(app)
-async_mode = None
-
-socket_ = SocketIO(app, async_mode=async_mode)
-
-
-
-# socket handler
-
-@socket_.on('my_event', namespace='/view')
-def test_message(message):
-    url = message["data"]
-    
-    processor = UrlProcessor(url)
-    processed_url = processor.get_processed_data()
-    print(type(url))
-    
-    url_handler = UrlHandlerFactory.get_instance(url)
-    user = User.query.filter_by(email=current_user.email).first()
-    view_count = url_handler.scrap_data().get_video_view_count()
-
-    url_ = Url.query.filter_by(url=url).first()
-    if url_ : 
-        print("url found so quiting")
-        return {"code":"201"}
-    print("url is not found so saving")
-
-    new_url = Url(url = url,platform = processed_url[0], view_count = view_count)
-
-    user.urls.append(new_url)
-
-    db.session.add(new_url)
-    db.session.commit()
-
-
-    print(message["data"])
-
-    emit('my_response',
-         {'data': message['data'], 'count': "234"})
-
-
-@socket_.on('my_broadcast_event', namespace='/view')
-def test_broadcast_message(message):
-    print(message["data"])
-
-    emit('my_response',
-         {'data': message['data'], 'count': "345"},
-         broadcast=True)
-
-
-@socket_.on('disconnect_request', namespace='/view')
-def disconnect_request():
-    @copy_current_request_context
-    def can_disconnect():
-        disconnect()
-
-    emit('my_response',
-         {'data': 'Disconnected!', 'count': "34"},
-         callback=can_disconnect)
-
-
 
 
 
@@ -121,7 +57,7 @@ def signup():
 @app.route("/viewer",methods = ["GET"])
 @login_required
 def viewer():
-    return render_template("views_viewer.html",async_mode=async_mode)
+    return render_template("views_viewer.html")
 
 @app.route("/setting",methods = ["GET"])
 @login_required
