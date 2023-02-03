@@ -24,6 +24,7 @@ class UrlHandlerFactory:
 
         elif (url.__contains__("tiktok")):
             tiktok_handler = handler.TikTokUrlHandler(processed_data)
+            tiktok_handler.set_access_token("d34345206emshadd9b00e3b03f6fp1f97a4jsn83cf7dddaef2")
 
             return tiktok_handler
         elif (url.__contains__("youtube")):

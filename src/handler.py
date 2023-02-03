@@ -57,20 +57,29 @@ class TikTokUrlHandler:
         # ["platform","id"]
         self.url_info = url_info
     
-    def scrap_data(self):
-        loop = asyncio.new_event_loop()
-        asyncio.set_event_loop(loop)
+    
+    def set_access_token(self,access_token):
+        self.access_token = access_token
 
-        api = TikTokApi()
-        video = Video(id = self.url_info[1])
-        self.play_count_str = video.info()["stats"]["playCount"]
-        loop.close()
+    def scrap_data(self):
+        url = "https://tiktok-scraper2.p.rapidapi.com/video/info"
+
+        querystring = {"video_url": self.url_info[1]}
+
+        headers = {
+            "X-RapidAPI-Key": self.access_token,
+            "X-RapidAPI-Host": "tiktok-scraper2.p.rapidapi.com"
+        }
+
+        response = requests.request("GET", url, headers=headers, params=querystring)
+        self.res = json.loads(response.text)
+        
 
 
         return self
     
     def get_video_view_count(self):
-        return int(self.play_count_str)
+        return int(self.res["itemStruct"]["stats"]["playCount"])
 
 class InstagramUrlHandler:
     def __init__(self,url_info):

@@ -1,0 +1,5 @@
+[default]
+BASE_URL = "https://www.tiktok.com/"
+HEADLESS = true
+LANG = "en"
+HOME_DIR = "E:\\masud_karim\\social_media_view_counter\\social_media_views_counter"

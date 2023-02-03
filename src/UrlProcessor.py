@@ -14,7 +14,7 @@ class UrlProcessor:
             video_id = arr[len(arr)-1]
             
             data.append("tiktok")
-            data.append(video_id)
+            data.append(self.url)
 
         elif (self.url.__contains__("instagram")):
             data.append("instagram")
