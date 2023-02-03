@@ -213,13 +213,14 @@ def change_pass():
     return redirect(url_for("index"))
 
 
-@app.before_first_request
-def admin_user_seeder():
+# @app.before_first_request
+# def admin_user_seeder():
 #     # admin_user = User.query.filter_by(is_admin = True).first()
 
 #     if (not admin_user.is_admin):
-    admin_user = User.query.filter_by(id=4).first()
-    db.session.delete(admin_user)
-    db.session.commit()
+#         print("Registering admin user...")
+#         admin_user = User(name = "Admin user", email = "khannaalankar2023@gmail.com",password=generate_password_hash("alankarM@",method = "sha256"),is_admin=True)
+#         db.session.add(admin_user)
+#         db.session.commit()
 #     else:
 #         print("Admin credential is already available in the database")
