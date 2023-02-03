@@ -28,6 +28,8 @@
     </style>
 
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.4/socket.io.js" integrity="sha512-YeeA/Qxn5hYdkukScTCNNOhTrv1C2RubAGButJ1rmgQwZf/HdRaCGl+JAVkqsqaNRaYNHdheiuKKuPf9mDcqKg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 <script>
   $(document).ready(function() {
     var web_url = "https://viewer-app.herokuapp.com/"
@@ -36,7 +38,7 @@
 
     })
     
-    fetch("https://video-views-counter-app.herokuapp.com/fetch_url_data",{
+    fetch("/fetch_url_data",{
         method : "get",
       }).then(res=>res.json()).then(res=> {
         var total_view_count = 0;
@@ -56,11 +58,11 @@
       let formData = new FormData();
       formData.append('url', url);
       
-      fetch("https://video-views-counter-app.herokuapp.com/add_url",{
+      fetch("/add_url",{
         method : "post",
         body : formData
       }).then(async res =>  {
-        await fetch("https://video-views-counter-app.herokuapp.com/fetch_url_data",{
+        await fetch("/fetch_url_data",{
         method : "get",
       }).then(res=>res.json()).then(res=> {
         var total_view_count = 0;
@@ -89,7 +91,7 @@
     $("#refresh").click(function(event){
       event.preventDefault();
       
-      fetch("https://video-views-counter-app.herokuapp.com/refresh_list",{
+      fetch("/refresh_list",{
         method : "get",
       }).then(res=>res.json()).then(res=> {
         var url = document.getElementById("url_input").value
@@ -97,7 +99,7 @@
       let formData = new FormData();
       formData.append('url', url);
 
-     fetch("https://video-views-counter-app.herokuapp.com/fetch_url_data",{
+     fetch("/fetch_url_data",{
         method : "get",
       }).then(res=>res.json()).then(res=> {
         var total_view_count = 0;
@@ -126,6 +128,46 @@
 
     
   })
+
+
+
+
+
+
+
+
+
+
+  // socket impl
+
+  $(document).ready(function() {
+
+namespace = '/view';
+var socket = io(namespace);
+
+socket.on('connect', function() {
+    socket.emit('my_event', {data: 'connected to the SocketServer...'});
+});
+
+socket.on('my_response', function(msg, cb) {
+  location.reload(true);
+    $('#log').append('<br>' + $('<div/>').text('logs #' + msg.count + ': ' + msg.data).html());
+    if (cb)
+        cb();
+});
+$('form#emit').submit(function(event) {
+    socket.emit('my_event', {data: $('#emit_data').val()});
+    return false;
+});
+$('form#broadcast').submit(function(event) {
+    socket.emit('my_broadcast_event', {data: $('#broadcast_data').val()});
+    return false;
+});
+$('form#disconnect').submit(function(event) {
+    socket.emit('disconnect_request');
+    return false;
+});
+});
 </script>
 
 </head>
