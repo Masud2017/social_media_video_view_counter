@@ -32,3 +32,4 @@ typing_extensions==4.4.0
 urllib3==1.26.14
 Werkzeug==2.2.2
 mysqlclient==2.1.1
+git+https://git@github.com/ping/instagram_private_api.git@1.6.0
