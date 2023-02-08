@@ -19,6 +19,11 @@ import os
 
 from .VideoViewsStat import VideoViewsStat
 
+from instagram_private_api import Client, ClientCompatPatch
+from flask import g
+
+global_insta_api_obj = Client("jibon123420", "@amiakjajabor0433")
+
 
 
 #?
@@ -137,7 +142,7 @@ def addUrl():
     processed_url = processor.get_processed_data()
     print(type(url))
     
-    url_handler = UrlHandlerFactory.get_instance(url)
+    url_handler = UrlHandlerFactory.get_instance(url,global_insta_api_obj)
     user = User.query.filter_by(email=current_user.email).first()
     view_count = url_handler.scrap_data().get_video_view_count()
 

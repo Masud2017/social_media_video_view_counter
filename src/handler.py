@@ -4,6 +4,7 @@ import json
 from TikTokApi import TikTokApi
 from TikTokApi.api.video import Video
 from instagram_private_api import Client, ClientCompatPatch
+from flask import g
 
 
 import asyncio
@@ -117,10 +118,10 @@ class TikTokUrlHandler:
 
 
 class InstagramUrlHandler:
-    def __init__(self,url_info):
+    def __init__(self,url_info,global_insta_obj):
         # ["platform_name","full video_url"]
         self.url_info = url_info
-        self.api = Client("jibon123420", "@amiakjajabor0433")
+        self.api = global_insta_obj
         self.media_id = self.api.oembed(url_info[1])["media_id"]
 
         print("initiating test")
