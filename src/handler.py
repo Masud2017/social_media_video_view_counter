@@ -118,40 +118,39 @@ class TikTokUrlHandler:
 
 
 class InstagramUrlHandler:
-    def __init__(self,url_info,global_insta_obj):
+    def __init__(self,url_info):
         # ["platform_name","full video_url"]
         self.url_info = url_info
-        self.api = global_insta_obj
-        self.media_id = self.api.oembed(url_info[1])["media_id"]
+      
 
-        print("initiating test")
+        
     def set_access_token(self,access_token):
         self.access_token = access_token
 
         return self
 
     def scrap_data(self):
-        # querystring = {"query":self.url_info[1],"related_posts":"false"}
-        # headers = {
-        #     "X-RapidAPI-Key": self.access_token,
-        #     "X-RapidAPI-Host": "instagram110.p.rapidapi.com"
-        # }
+        url = "https://instagram-scraper-2022.p.rapidapi.com/ig/post_info/"
 
-        # url = "https://instagram110.p.rapidapi.com/v2/instagram/post"
+        querystring = {"shortcode": self.url_info[1]}
 
-        # self.response = requests.request("GET", url, headers=headers, params=querystring)
-        # print(self.api.medias_info(self.media_id))
-        self.json_data = self.api.medias_info(self.media_id.split("_")[0])
+        headers = {
+            "X-RapidAPI-Key": self.access_token,
+            "X-RapidAPI-Host": "instagram-scraper-2022.p.rapidapi.com"
+        }
+
+        self.response = requests.request("GET", url, headers=headers, params=querystring)
+
+        return self
 
 
         return self
     
     def get_video_view_count(self):
-        # json_data = json.loads(self.response.text)
+        json_data = json.loads(self.response.text)
         
-        # # return int(json_data["video_views_count"])
-        return int(self.json_data["items"][0]["play_count"]
-)
+        # return int(json_data["video_views_count"])
+        return int(json_data["video_play_count"])
 
 
 

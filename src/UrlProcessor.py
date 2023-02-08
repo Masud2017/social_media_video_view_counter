@@ -1,3 +1,4 @@
+import re
 class UrlProcessor:
     def __init__(self,url):
         self.url = url
@@ -18,7 +19,10 @@ class UrlProcessor:
 
         elif (self.url.__contains__("instagram")):
             data.append("instagram")
-            data.append(self.url)
+            print(self.url)
+            rex = re.findall("(?:https?:\/\/)?(?:www.)?instagram.com\/?([a-zA-Z0-9\.\_\-]+)?\/([p]+)?([reel]+)?([tv]+)?([stories]+)?\/([a-zA-Z0-9\-\_\.]+)\/?([0-9]+)?",self.url)
+            print(rex)
+            data.append(rex[0][5])
 
         elif (self.url.__contains__("youtube")):
             # arr = self.url.split("/")

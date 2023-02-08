@@ -7,7 +7,7 @@ class UrlHandlerFactory:
     def __init__(self):
         pass
     @classmethod
-    def get_instance(self,url,global_insta_obj):
+    def get_instance(self,url):
         url_processor = UrlProcessor.UrlProcessor(url)
         processed_data = url_processor.get_processed_data()
         
@@ -17,7 +17,7 @@ class UrlHandlerFactory:
             return facebook_handler
             
         elif (url.__contains__("instagram")):
-            instagram_handler = handler.InstagramUrlHandler(processed_data,global_insta_obj)
+            instagram_handler = handler.InstagramUrlHandler(processed_data)
             instagram_handler.set_access_token("d34345206emshadd9b00e3b03f6fp1f97a4jsn83cf7dddaef2")
             
             return instagram_handler
