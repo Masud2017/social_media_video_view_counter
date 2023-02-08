@@ -22,8 +22,8 @@ from .VideoViewsStat import VideoViewsStat
 from instagram_private_api import Client, ClientCompatPatch
 from flask import g
 
-# global_insta_api_obj = Client("jibon123420", "@amiakjajabor0433")
-global_insta_api_obj = Client("khannaalankar2023", "alankarM@")
+global_insta_api_obj = Client("jibon123420", "@amiakjajabor0433")
+# global_insta_api_obj = Client("khannaalankar2023", "alankarM@")
 
 
 
