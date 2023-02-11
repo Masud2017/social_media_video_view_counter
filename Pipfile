@@ -14,6 +14,8 @@ TikTokApi="*"
 mysqlclient="*"
 playwright="*"
 instagram-private-api="*"
+flask_socketio="*"
+
 
 
 [dev-packages]

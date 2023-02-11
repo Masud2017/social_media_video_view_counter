@@ -22,6 +22,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;500;600;700;800;900;1000&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
+
+
 
     <style>
         * {
@@ -155,6 +158,39 @@ chart.canvas.parentNode.style.height = '30rem';
 chart.canvas.parentNode.style.width = '30rem';
 '{% endif %}'
 
+
+
+
+
+/*socket io implenetation*/
+namespace = '/sock';
+            var socket = io(namespace);
+
+            socket.on('connect', function() {
+                socket.emit('my_event', {data: 'connected to the SocketServer...'});
+            });
+
+            socket.on('my_response', function(msg, cb) {
+                $('#log').append('<br>' + $('<div/>').text('logs #' + msg.count + ': ' + msg.data).html());
+                if (cb)
+                    cb();
+            });
+            $('form#emit').submit(function(event) {
+                socket.emit('refresh', {data: $('#emit_data').val()});
+                return false;
+            });
+            socket.on('refresh_ans',function(msg,cb){
+              location.reload();
+            })
+            $('form#broadcast').submit(function(event) {
+                socket.emit('my_broadcast_event', {data: $('#broadcast_data').val()});
+                return false;
+            });
+            $('form#disconnect').submit(function(event) {
+                socket.emit('disconnect_request');
+                return false;
+            });
+
   })
   
 
@@ -210,4 +246,5 @@ chart.canvas.parentNode.style.width = '30rem';
     <div name = "footer">
         <p class = "text-center">Copyright &copy from 2023</p>
     </div>
+    
 </body>

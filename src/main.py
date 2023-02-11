@@ -17,10 +17,12 @@ from .models.Models import Url
 import re
 import os
 
+from flask_socketio import SocketIO, emit, disconnect
+
 from .VideoViewsStat import VideoViewsStat
 
 from instagram_private_api import Client, ClientCompatPatch
-from flask import g
+from flask import g,copy_current_request_context
 
 # global_insta_api_obj = Client("jibon123420", "@amiakjajabor0433")
 # global_insta_api_obj = Client("khannaalankar2023", "alankarM@")
@@ -46,6 +48,10 @@ with app.app_context():
 login_manager = LoginManager()
 login_manager.login_view = 'login'
 login_manager.init_app(app)
+
+async_mode = None
+socket_ = SocketIO(app, async_mode=async_mode)
+
 
 
 
@@ -231,3 +237,45 @@ def change_pass():
 #         db.session.commit()
 #     else:
 #         print("Admin credential is already available in the database")
+
+
+
+# web socket portion started
+
+@socket_.on('my_event', namespace='/sock')
+def test_message(message):
+    # session['receive_count'] = session.get('receive_count', 0) + 1
+    print(message["data"])
+    emit('my_response',
+         {'data': message['data'], 'count': 2})
+@socket_.on("refresh",namespace='/sock')
+def refresh(message):
+    url_list = current_user.urls
+    
+    for url_item in url_list:
+        handler = UrlHandlerFactory.get_instance(url_item.url)
+        updated_view_count = handler.scrap_data().get_video_view_count()
+        print(url_item.url,updated_view_count)
+        url_item.view_count = updated_view_count
+        db.session.commit()
+    emit("refresh_ans",{'data':'data'})
+
+
+@socket_.on('my_broadcast_event', namespace='/sock')
+def test_broadcast_message(message):
+    # session['receive_count'] = session.get('receive_count', 0) + 1
+    emit('my_response',
+         {'data': message['data'], 'count': 2},
+         broadcast=True)
+
+
+@socket_.on('disconnect_request', namespace='/sock')
+def disconnect_request():
+    @copy_current_request_context
+    def can_disconnect():
+        disconnect()
+
+    # session['receive_count'] = session.get('receive_count', 0) + 1
+    emit('my_response',
+         {'data': 'Disconnected!', 'count': 2},
+         callback=can_disconnect)
