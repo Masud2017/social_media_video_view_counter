@@ -1,4 +1,4 @@
-from src.main import app,socket_
+from src.main import app
 import os
 
 if __name__ == "__main__":
