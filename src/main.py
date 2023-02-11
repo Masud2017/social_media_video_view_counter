@@ -50,7 +50,7 @@ login_manager.login_view = 'login'
 login_manager.init_app(app)
 
 async_mode = None
-socket_ = SocketIO(app, async_mode=async_mode)
+# socket_ = SocketIO(app, async_mode=async_mode)
 
 
 
@@ -242,40 +242,40 @@ def change_pass():
 
 # web socket portion started
 
-@socket_.on('my_event', namespace='/sock')
-def test_message(message):
-    # session['receive_count'] = session.get('receive_count', 0) + 1
-    print(message["data"])
-    emit('my_response',
-         {'data': message['data'], 'count': 2})
-@socket_.on("refresh",namespace='/sock')
-def refresh(message):
-    url_list = current_user.urls
+# @socket_.on('my_event', namespace='/sock')
+# def test_message(message):
+#     # session['receive_count'] = session.get('receive_count', 0) + 1
+#     print(message["data"])
+#     emit('my_response',
+#          {'data': message['data'], 'count': 2})
+# @socket_.on("refresh",namespace='/sock')
+# def refresh(message):
+#     url_list = current_user.urls
     
-    for url_item in url_list:
-        handler = UrlHandlerFactory.get_instance(url_item.url)
-        updated_view_count = handler.scrap_data().get_video_view_count()
-        print(url_item.url,updated_view_count)
-        url_item.view_count = updated_view_count
-        db.session.commit()
-    emit("refresh_ans",{'data':'data'})
+#     for url_item in url_list:
+#         handler = UrlHandlerFactory.get_instance(url_item.url)
+#         updated_view_count = handler.scrap_data().get_video_view_count()
+#         print(url_item.url,updated_view_count)
+#         url_item.view_count = updated_view_count
+#         db.session.commit()
+#     emit("refresh_ans",{'data':'data'})
 
 
-@socket_.on('my_broadcast_event', namespace='/sock')
-def test_broadcast_message(message):
-    # session['receive_count'] = session.get('receive_count', 0) + 1
-    emit('my_response',
-         {'data': message['data'], 'count': 2},
-         broadcast=True)
+# @socket_.on('my_broadcast_event', namespace='/sock')
+# def test_broadcast_message(message):
+#     # session['receive_count'] = session.get('receive_count', 0) + 1
+#     emit('my_response',
+#          {'data': message['data'], 'count': 2},
+#          broadcast=True)
 
 
-@socket_.on('disconnect_request', namespace='/sock')
-def disconnect_request():
-    @copy_current_request_context
-    def can_disconnect():
-        disconnect()
+# @socket_.on('disconnect_request', namespace='/sock')
+# def disconnect_request():
+#     @copy_current_request_context
+#     def can_disconnect():
+#         disconnect()
 
-    # session['receive_count'] = session.get('receive_count', 0) + 1
-    emit('my_response',
-         {'data': 'Disconnected!', 'count': 2},
-         callback=can_disconnect)
+#     # session['receive_count'] = session.get('receive_count', 0) + 1
+#     emit('my_response',
+#          {'data': 'Disconnected!', 'count': 2},
+#          callback=can_disconnect)
