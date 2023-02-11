@@ -37,3 +37,5 @@ git+https://git@github.com/ping/instagram_private_api.git@1.6.0
 Flask_SocketIO
 python-engineio
 python-socketio
+APScheduler
+

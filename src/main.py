@@ -24,6 +24,12 @@ from .VideoViewsStat import VideoViewsStat
 from instagram_private_api import Client, ClientCompatPatch
 from flask import g,copy_current_request_context
 
+import atexit
+
+from apscheduler.schedulers.background import BackgroundScheduler
+from apscheduler.triggers.interval import IntervalTrigger
+
+
 # global_insta_api_obj = Client("jibon123420", "@amiakjajabor0433")
 # global_insta_api_obj = Client("khannaalankar2023", "alankarM@")
 
@@ -52,6 +58,21 @@ login_manager.init_app(app)
 async_mode = None
 # socket_ = SocketIO(app, async_mode=async_mode)
 
+# task schedular 
+def update_url_list():
+    url_list = Url.query.all()
+
+    for url_item in url_list:
+        handler = UrlHandlerFactory.get_instance(url_item.url)
+        updated_view_count = handler.scrap_data().get_video_view_count()
+        print(url_item.url,updated_view_count)
+        url_item.view_count = updated_view_count
+        db.session.commit()
+        
+schedular = BackgroundScheduler()
+schedular.add_job(func=update_url_list,trigger=IntervalTrigger(hours=8),id='update_url_list',replace_existing=True)
+schedular.start()
+atexit.register(lambda: schedular.shutdown())
 
 
 
