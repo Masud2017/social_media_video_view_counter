@@ -75,8 +75,10 @@ class TikTokUrlHandler:
         }
 
         response = requests.request("GET", url, headers=headers, params=querystring)
-        self.res = json.loads(response.text)
-        
+        try:
+            self.res = json.loads(response.text)
+        except ValueError:
+            print("This text is not able to read. : ",response.text)
 
 
         return self
