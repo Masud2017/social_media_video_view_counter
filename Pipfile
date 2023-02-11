@@ -15,7 +15,7 @@ mysqlclient="*"
 playwright="*"
 instagram-private-api="*"
 flask_socketio="*"
-APScheduler="*"
+Flask-APScheduler="*"
 
 
 

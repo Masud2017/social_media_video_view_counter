@@ -26,8 +26,7 @@ from flask import g,copy_current_request_context
 
 import atexit
 
-from apscheduler.schedulers.background import BackgroundScheduler
-from apscheduler.triggers.interval import IntervalTrigger
+from flask_apscheduler import APScheduler
 
 
 # global_insta_api_obj = Client("jibon123420", "@amiakjajabor0433")
@@ -60,17 +59,19 @@ async_mode = None
 
 # task schedular 
 def update_url_list():
-    url_list = Url.query.all()
+    with app.app_context():
+        url_list = Url.query.all()
 
-    for url_item in url_list:
-        handler = UrlHandlerFactory.get_instance(url_item.url)
-        updated_view_count = handler.scrap_data().get_video_view_count()
-        print(url_item.url,updated_view_count)
-        url_item.view_count = updated_view_count
-        db.session.commit()
+        for url_item in url_list:
+            handler = UrlHandlerFactory.get_instance(url_item.url)
+            updated_view_count = handler.scrap_data().get_video_view_count()
+            print(url_item.url,updated_view_count)
+            url_item.view_count = updated_view_count
+            db.session.commit()
         
-schedular = BackgroundScheduler()
-schedular.add_job(func=update_url_list,trigger=IntervalTrigger(hours=8),id='update_url_list',replace_existing=True)
+schedular = APScheduler()
+schedular.init_app(app)
+schedular.add_job(func=update_url_list,trigger='interval',hours=5,id='update_url_list')
 schedular.start()
 atexit.register(lambda: schedular.shutdown())
 
