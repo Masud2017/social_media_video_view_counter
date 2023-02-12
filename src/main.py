@@ -28,6 +28,8 @@ import atexit
 
 from flask_apscheduler import APScheduler
 
+import time
+
 
 # global_insta_api_obj = Client("jibon123420", "@amiakjajabor0433")
 # global_insta_api_obj = Client("khannaalankar2023", "alankarM@")
@@ -64,15 +66,19 @@ async_mode = None
 def update_url_list():
     with app.app_context():
         url_list = Url.query.all()
+        time.sleep(3)
         url_list = Url.query.all()
 
 
         for url_item in url_list:
             handler = UrlHandlerFactory.get_instance(url_item.url)
-            updated_view_count = handler.scrap_data().get_video_view_count()
-            print(url_item.url,updated_view_count)
-            url_item.view_count = updated_view_count
-            db.session.commit()
+            try:
+                updated_view_count = handler.scrap_data().get_video_view_count()
+                print(url_item.url,updated_view_count)
+                url_item.view_count = updated_view_count
+                db.session.commit()
+            except KeyError:
+                print("This url is causing the exception: ",url_item)
         
 schedular = APScheduler()
 schedular.init_app(app)
