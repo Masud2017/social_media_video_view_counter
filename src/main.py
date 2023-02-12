@@ -44,8 +44,8 @@ app.config['SECRET_KEY'] = 'secret-key-goes-here'
 db_url = os.environ.get("CLEARDB_DATABASE_URL")
 app.config["SQLALCHEMY_DATABASE_URI"] = db_url.split("?")[0]
 
-app.config["SQLALCHEMY_POOL_RECYCLE"] = 280
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+app.config["SQLALCHEMY_POOL_RECYCLE"] = 50
+# app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db.init_app(app)
 migrate = Migrate(app, db,render_as_batch=True)
@@ -76,7 +76,7 @@ def update_url_list():
         
 schedular = APScheduler()
 schedular.init_app(app)
-schedular.add_job(func=update_url_list,trigger='interval',minutes=15,id='update_url_list')
+schedular.add_job(func=update_url_list,trigger='interval',minutes=3,id='update_url_list')
 schedular.start()
 atexit.register(lambda: schedular.shutdown())
 
