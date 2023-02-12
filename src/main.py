@@ -65,6 +65,29 @@ login_manager.init_app(app)
 async_mode = None
 # socket_ = SocketIO(app, async_mode=async_mode)
 
+# auto reconnector
+def try_reconnect():
+    while True:
+        try:
+            db.session.rollback()
+
+            db.session.execute(text("SELECT 1"))
+
+            break
+        except (exc.OperationalError, exc.ProgrammingError):
+            time.sleep(1)
+
+
+@app.before_request
+def before_request():
+    try:
+        db.session.execute(text("SELECT 1"))
+
+    except (exc.OperationalError, exc.ProgrammingError):
+        try_reconnect()
+
+
+
 # task schedular 
 def update_url_list():
     with app.app_context():
@@ -266,25 +289,6 @@ def change_pass():
 
 
 
-def try_reconnect():
-    while True:
-        try:
-            db.session.rollback()
-
-            db.session.execute(text("SELECT 1"))
-
-            break
-        except (exc.OperationalError, exc.ProgrammingError):
-            time.sleep(1)
-
-
-@app.before_request
-def before_request():
-    try:
-        db.session.execute(text("SELECT 1"))
-
-    except (exc.OperationalError, exc.ProgrammingError):
-        try_reconnect()
 # @app.before_first_request
 # def admin_user_seeder():
 #     # admin_user = User.query.filter_by(is_admin = True).first()
