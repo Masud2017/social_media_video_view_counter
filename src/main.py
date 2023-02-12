@@ -269,7 +269,7 @@ def try_reconnect():
             db.session.execute(text("SELECT 1"))
 
             break
-        except (exc.OperationalError, exc.ProgrammingError):
+        except (exc.OperationalError, exc.ProgrammingError,exc.PendingRollbackError):
             time.sleep(1)
 
 
@@ -278,7 +278,7 @@ def before_request():
     try:
         db.session.execute(text("SELECT 1"))
 
-    except (exc.OperationalError, exc.ProgrammingError):
+    except (exc.OperationalError, exc.ProgrammingError,exc.PendingRollbackError):
         try_reconnect()
 # @app.before_first_request
 # def admin_user_seeder():
