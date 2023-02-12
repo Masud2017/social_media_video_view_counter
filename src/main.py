@@ -71,7 +71,7 @@ def update_url_list():
         
 schedular = APScheduler()
 schedular.init_app(app)
-schedular.add_job(func=update_url_list,trigger='interval',minutes=12,id='update_url_list')
+schedular.add_job(func=update_url_list,trigger='interval',minutes=3,id='update_url_list')
 schedular.start()
 atexit.register(lambda: schedular.shutdown())
 
