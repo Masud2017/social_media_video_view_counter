@@ -111,18 +111,22 @@ def update_url_list():
             except KeyError:
                 print("This url is causing the exception: ",url_item.url)
                 print("using alternative api ")
-                alternative_handler = InstagramUrlHandlerAlternative(["instagram",url_item.url])
-                alternative_handler.set_access_token("d34345206emshadd9b00e3b03f6fp1f97a4jsn83cf7dddaef2")
-                try:
-                    updated_view_count = alternative_handler.scrap_data().get_video_view_count()
-                    url_item.view_count = updated_view_count
-
+                url_processor = UrlProcessor(url_item.url)
+                processed_url = url_processor.get_processed_data()
+                if (processed_url[0] == "instagram"):
+                
+                    alternative_handler = InstagramUrlHandlerAlternative(["instagram",url_item.url])
+                    alternative_handler.set_access_token("d34345206emshadd9b00e3b03f6fp1f97a4jsn83cf7dddaef2")
                     try:
-                        db.session.commit()
-                    except exc.OperationalError:
-                        db.session.commit()
-                except KeyError:
-                    print("Failed even after using the alternataive  url : ",url_item.url)
+                        updated_view_count = alternative_handler.scrap_data().get_video_view_count()
+                        url_item.view_count = updated_view_count
+
+                        try:
+                            db.session.commit()
+                        except exc.OperationalError:
+                            db.session.commit()
+                    except KeyError:
+                        print("Failed even after using the alternataive  url : ",url_item.url)
     print("Url update operation done")
 
         
