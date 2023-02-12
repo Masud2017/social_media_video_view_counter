@@ -155,6 +155,38 @@ class InstagramUrlHandler:
         return int(json_data["video_play_count"])
 
 
+class InstagramUrlHandlerAlternative:
+    def __init__(self,url_info):
+        # ["platform_name","full video_url"]
+        self.url_info = url_info
+
+    def set_access_token(self,access_token):
+        self.access_token = access_token
+
+        return self
+
+    def scrap_data(self):
+        querystring = {"query":self.url_info[1],"related_posts":"false"}
+        headers = {
+            "X-RapidAPI-Key": self.access_token,
+            "X-RapidAPI-Host": "instagram110.p.rapidapi.com"
+        }
+
+        url = "https://instagram110.p.rapidapi.com/v2/instagram/post"
+
+        self.response = requests.request("GET", url, headers=headers, params=querystring)
+
+
+
+        return self
+    
+    def get_video_view_count(self):
+        json_data = json.loads(self.response.text)
+        
+        # return int(json_data["video_views_count"])
+        return int(json_data["video_plays_count"])
+
+
 
 #test code
 if __name__ == "__main__":
