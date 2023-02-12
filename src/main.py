@@ -64,6 +64,8 @@ async_mode = None
 def update_url_list():
     with app.app_context():
         url_list = Url.query.all()
+        url_list = Url.query.all()
+
 
         for url_item in url_list:
             handler = UrlHandlerFactory.get_instance(url_item.url)
@@ -74,7 +76,7 @@ def update_url_list():
         
 schedular = APScheduler()
 schedular.init_app(app)
-schedular.add_job(func=update_url_list,trigger='interval',minutes=3,id='update_url_list')
+schedular.add_job(func=update_url_list,trigger='interval',minutes=15,id='update_url_list')
 schedular.start()
 atexit.register(lambda: schedular.shutdown())
 
