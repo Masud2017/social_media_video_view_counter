@@ -78,7 +78,7 @@ def update_url_list():
                 url_item.view_count = updated_view_count
                 db.session.commit()
             except KeyError:
-                print("This url is causing the exception: ",url_item)
+                print("This url is causing the exception: ",url_item.url)
         
 schedular = APScheduler()
 schedular.init_app(app)
