@@ -91,6 +91,8 @@ def before_request():
 # task schedular 
 def update_url_list():
     with app.app_context():
+        before_request()
+        
         url_list = Url.query.all()
         time.sleep(3)
         url_list = Url.query.all()
