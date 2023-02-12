@@ -266,10 +266,12 @@ def change_pass():
 def try_reconnect():
     while True:
         try:
+            db.session.rollback()
+
             db.session.execute(text("SELECT 1"))
 
             break
-        except (exc.OperationalError, exc.ProgrammingError,exc.PendingRollbackError):
+        except (exc.OperationalError, exc.ProgrammingError):
             time.sleep(1)
 
 
@@ -278,7 +280,7 @@ def before_request():
     try:
         db.session.execute(text("SELECT 1"))
 
-    except (exc.OperationalError, exc.ProgrammingError,exc.PendingRollbackError):
+    except (exc.OperationalError, exc.ProgrammingError):
         try_reconnect()
 # @app.before_first_request
 # def admin_user_seeder():
