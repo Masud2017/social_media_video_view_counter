@@ -29,7 +29,7 @@ import atexit
 from flask_apscheduler import APScheduler
 
 import time
-from sqlalchemy import exc
+from sqlalchemy import exc,text
 
 
 
@@ -263,10 +263,21 @@ def change_pass():
 
 
 
+def try_reconnect():
+    while True:
+        try:
+            db.session.execute(text("SELECT 1"))
+
+            break
+        except (exc.OperationalError, exc.ProgrammingError):
+            time.sleep(1)
+
+
 @app.before_request
 def before_request():
     try:
-        db.session.execute("SELECT 1")
+        db.session.execute(text("SELECT 1"))
+
     except (exc.OperationalError, exc.ProgrammingError):
         try_reconnect()
 # @app.before_first_request
