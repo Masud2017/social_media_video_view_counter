@@ -55,6 +55,40 @@ class FacebookUrlHandler:
 
         return views_count*self.converion_digit_and_symbol_mapper[symbol]
 
+# class TikTokUrlHandler:
+#     def __init__(self,url_info):
+#         # ["platform","id"]
+#         self.url_info = url_info
+    
+    
+#     def set_access_token(self,access_token):
+#         self.access_token = access_token
+
+#     def scrap_data(self):
+#         url = "https://tiktok-scraper2.p.rapidapi.com/video/info"
+
+#         querystring = {"video_url": self.url_info[1]}
+
+#         headers = {
+#             "X-RapidAPI-Key": self.access_token,
+#             "X-RapidAPI-Host": "tiktok-scraper2.p.rapidapi.com"
+#         }
+
+#         response = requests.request("GET", url, headers=headers, params=querystring)
+#         try:
+#             self.res = json.loads(response.text)
+#         except ValueError:
+#             print("This text is not able to read. : ",response.text)
+
+
+#         return self
+    
+#     def get_video_view_count(self):
+#         return int(self.res["itemStruct"]["stats"]["playCount"])
+
+
+
+# temp
 class TikTokUrlHandler:
     def __init__(self,url_info):
         # ["platform","id"]
@@ -65,26 +99,24 @@ class TikTokUrlHandler:
         self.access_token = access_token
 
     def scrap_data(self):
-        url = "https://tiktok-scraper2.p.rapidapi.com/video/info"
+        obj = None
+        self.json_data = None
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
 
-        querystring = {"video_url": self.url_info[1]}
+        with TikTokApi() as api:
+            obj = api.video(id = self.url_info[1])
+            self.json_data = obj.info()
 
-        headers = {
-            "X-RapidAPI-Key": self.access_token,
-            "X-RapidAPI-Host": "tiktok-scraper2.p.rapidapi.com"
-        }
-
-        response = requests.request("GET", url, headers=headers, params=querystring)
-        try:
-            self.res = json.loads(response.text)
-        except ValueError:
-            print("This text is not able to read. : ",response.text)
-
+        loop.close()
 
         return self
     
     def get_video_view_count(self):
-        return int(self.res["itemStruct"]["stats"]["playCount"])
+        return int(self.json_data["stats"]["playCount"])
+
+#temp end
+
 
 # class InstagramUrlHandler:
 #     def __init__(self,url_info):

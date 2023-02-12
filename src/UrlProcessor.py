@@ -14,8 +14,9 @@ class UrlProcessor:
             arr = self.url.split("/")
             video_id = arr[len(arr)-1]
             
+            parsed_id_arr = re.findall(r'/video/(\d+)',self.url)
             data.append("tiktok")
-            data.append(self.url)
+            data.append(parsed_id_arr[0])
 
         elif (self.url.__contains__("instagram")):
             data.append("instagram")
