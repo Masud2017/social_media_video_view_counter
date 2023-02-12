@@ -79,7 +79,10 @@ def update_url_list():
                 updated_view_count = handler.scrap_data().get_video_view_count()
                 print(url_item.url,updated_view_count)
                 url_item.view_count = updated_view_count
-                db.session.commit()
+                try:
+                    db.session.commit()
+                except exc.OperationalError:
+                    db.session.commit()
             except KeyError:
                 print("This url is causing the exception: ",url_item.url)
         
