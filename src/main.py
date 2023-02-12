@@ -29,6 +29,8 @@ import atexit
 from flask_apscheduler import APScheduler
 
 import time
+from sqlalchemy import exc
+
 
 
 # global_insta_api_obj = Client("jibon123420", "@amiakjajabor0433")
@@ -260,6 +262,13 @@ def change_pass():
     return redirect(url_for("index"))
 
 
+
+@app.before_request
+def before_request():
+    try:
+        db.session.execute("SELECT 1")
+    except (exc.OperationalError, exc.ProgrammingError):
+        try_reconnect()
 # @app.before_first_request
 # def admin_user_seeder():
 #     # admin_user = User.query.filter_by(is_admin = True).first()
