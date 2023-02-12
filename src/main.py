@@ -123,6 +123,7 @@ def update_url_list():
                         db.session.commit()
                 except KeyError:
                     print("Failed even after using the alternataive  url : ",url_item.url)
+    print("Url update operation done")
 
         
 schedular = APScheduler()
